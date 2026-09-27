@@ -1,0 +1,14 @@
+{
+  "target_load_factor": 1.0,
+  "initial_load_increment": 0.1,
+  "minimum_load_increment": 0.0001,
+  "maximum_load_increment": 0.25,
+  "maximum_steps": 100,
+  "maximum_iterations_per_step": 25,
+  "maximum_cutbacks": 12,
+  "residual_absolute_tolerance_n": 1e-08,
+  "residual_relative_tolerance": 1e-09,
+  "displacement_increment_tolerance_m": 1e-12,
+  "restart_interval": 1,
+  "deterministic_profile": true
+}

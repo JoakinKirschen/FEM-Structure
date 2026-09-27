@@ -1,0 +1,219 @@
+{
+  "schema_version": "structural-release/1.0",
+  "release_id": "pass20-pilot-candidate",
+  "version": "0.20.0",
+  "channel": "pilot",
+  "created_at_utc": "2024-01-01T00:00:00Z",
+  "source_commit": "replace-with-immutable-source-commit",
+  "artifacts": [
+    {
+      "path": "evidence/backup-restore-drill.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "e0cc3c1df2a65d9155e3d5dee9ed61f326c1f7a05deebcb4e9e7a9e27c724036",
+      "bytes": 290
+    },
+    {
+      "path": "evidence/fuzzing-summary.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "7921c43bfd54614de59c11b6c86f08d01001135603e4b73455e77fdc946791c4",
+      "bytes": 327
+    },
+    {
+      "path": "evidence/incident-response.json",
+      "kind": "documentation",
+      "media_type": "application/json",
+      "sha256": "aab1ab2b79d40f7a8c5ede5eae1bd1f3df9b43f96d93186bac5852f1237e1660",
+      "bytes": 375
+    },
+    {
+      "path": "evidence/marketplace-governance.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "bad541315bd431fc534746788f9ec26b4378c6d8abcf80e79f1049a1a3d17387",
+      "bytes": 303
+    },
+    {
+      "path": "evidence/migration-matrix.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "e5f9796185178c6afaa1be01cd1a928156750fd181209ff4c029aba793a99407",
+      "bytes": 282
+    },
+    {
+      "path": "evidence/performance-budgets.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "e25fa14e47410983aba25668f95799106e70f2ab34b584e6986617b26fef8f8e",
+      "bytes": 447
+    },
+    {
+      "path": "evidence/pilot-acceptance.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "9c418560d571307b9574435cdcde06b034a2694d855fdd529804ba72b4ea72c2",
+      "bytes": 383
+    },
+    {
+      "path": "evidence/provenance.json",
+      "kind": "provenance",
+      "media_type": "application/json",
+      "sha256": "694bd75d4edbc3d93d4cd0d75bd6ccfa37f6ba208869dd30e3de90f7795dcee5",
+      "bytes": 610
+    },
+    {
+      "path": "evidence/sbom.spdx.json",
+      "kind": "sbom",
+      "media_type": "application/spdx+json",
+      "sha256": "aefd3a6ccdadd8cf38132b1d5d405b7a542dc48b79d1a8fad0f9ae91b45ea5a1",
+      "bytes": 832
+    },
+    {
+      "path": "evidence/support-readiness.json",
+      "kind": "documentation",
+      "media_type": "application/json",
+      "sha256": "a1e5b2bd82a2e4d30f1c879af47ab8b10160bb02118e248a4d62ff71cff021bc",
+      "bytes": 330
+    },
+    {
+      "path": "evidence/telemetry-policy.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "4ff90db157fd5d332b91c1fd4f9a12ec506086a3fc950da209e5977478faf192",
+      "bytes": 293
+    },
+    {
+      "path": "evidence/threat-model.json",
+      "kind": "evidence",
+      "media_type": "application/json",
+      "sha256": "21e2d42e48a1fe01fa698a0d220fc281ead2d8c48fe7df6c794c566f03066c1e",
+      "bytes": 805
+    }
+  ],
+  "controls": [
+    {
+      "id": "security.threat_model",
+      "title": "security / threat_model",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/threat-model.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "performance.budgets",
+      "title": "performance / budgets",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/performance-budgets.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "quality.fuzzing",
+      "title": "quality / fuzzing",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/fuzzing-summary.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "resilience.backup_restore",
+      "title": "resilience / backup_restore",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/backup-restore-drill.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "compatibility.migrations",
+      "title": "compatibility / migrations",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/migration-matrix.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "supply_chain.sbom",
+      "title": "supply_chain / sbom",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/sbom.spdx.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "operations.incident_response",
+      "title": "operations / incident_response",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/incident-response.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "operations.support",
+      "title": "operations / support",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/support-readiness.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "marketplace.governance",
+      "title": "marketplace / governance",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/marketplace-governance.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "privacy.telemetry",
+      "title": "privacy / telemetry",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/telemetry-policy.json"
+      ],
+      "waiver": null
+    },
+    {
+      "id": "pilot.acceptance",
+      "title": "pilot / acceptance",
+      "status": "passed",
+      "evidence_paths": [
+        "evidence/pilot-acceptance.json"
+      ],
+      "waiver": null
+    }
+  ],
+  "telemetry": {
+    "policy_version": "1.0",
+    "default_enabled": false,
+    "explicit_consent_required": true,
+    "model_content_collected": false,
+    "precise_geometry_collected": false,
+    "retention_days": 30,
+    "allowed_event_categories": [
+      "crash",
+      "performance",
+      "feature_usage"
+    ],
+    "deletion_request_supported": true
+  },
+  "marketplace": {
+    "signed_packages_required": true,
+    "sandbox_required": true,
+    "malware_scan_required": true,
+    "independent_review_required": true,
+    "revocation_supported": true,
+    "emergency_kill_switch_supported": true,
+    "compatibility_policy": "semantic API ranges plus explicit host compatibility matrix"
+  },
+  "signatures": []
+}

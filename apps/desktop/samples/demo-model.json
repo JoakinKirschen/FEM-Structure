@@ -1,0 +1,62 @@
+{
+  "schema_version": "0.3-desktop",
+  "name": "Interactive starter truss",
+  "nodes": [
+    {
+      "id": "node-a",
+      "name": "Left support",
+      "position": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "node-b",
+      "name": "Right support",
+      "position": {
+        "x": 6,
+        "y": 0,
+        "z": 0
+      }
+    },
+    {
+      "id": "node-c",
+      "name": "Apex",
+      "position": {
+        "x": 3,
+        "y": 0,
+        "z": 2.5
+      }
+    }
+  ],
+  "members": [
+    {
+      "id": "member-1",
+      "name": "Left chord",
+      "start_node_id": "node-a",
+      "end_node_id": "node-c",
+      "area_m2": 0.01,
+      "youngs_modulus_pa": 210000000000
+    },
+    {
+      "id": "member-2",
+      "name": "Right chord",
+      "start_node_id": "node-c",
+      "end_node_id": "node-b",
+      "area_m2": 0.01,
+      "youngs_modulus_pa": 210000000000
+    },
+    {
+      "id": "member-3",
+      "name": "Bottom chord",
+      "start_node_id": "node-a",
+      "end_node_id": "node-b",
+      "area_m2": 0.01,
+      "youngs_modulus_pa": 210000000000
+    }
+  ],
+  "notes": [
+    "Assign a pinned support to node-a, a roller support to node-b, and a downward point load to node-c."
+  ]
+}

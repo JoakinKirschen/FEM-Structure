@@ -1,0 +1,28 @@
+{
+  "_type": "https://in-toto.io/Statement/v1",
+  "subject": [
+    {
+      "name": "structural-platform-source",
+      "digest": {
+        "sha256": "illustrative-source-digest-not-a-release"
+      }
+    }
+  ],
+  "predicateType": "https://slsa.dev/provenance/v1",
+  "predicate": {
+    "buildDefinition": {
+      "buildType": "reference-pass20",
+      "externalParameters": {},
+      "internalParameters": {},
+      "resolvedDependencies": []
+    },
+    "runDetails": {
+      "builder": {
+        "id": "local-reference"
+      },
+      "metadata": {
+        "invocationId": "pass20-example"
+      }
+    }
+  }
+}

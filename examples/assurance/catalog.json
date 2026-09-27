@@ -1,0 +1,145 @@
+{
+  "schema_version": "structural-assurance-catalog/1.0",
+  "product_name": "Structural Platform",
+  "product_version": "0.19.0",
+  "published_at_utc": "2026-09-27T18:30:00Z",
+  "scope_statement": "Open reference evidence for the Pass 19 architecture demonstrator; no certification or fitness-for-purpose claim.",
+  "benchmarks": [
+    {
+      "benchmark_id": "linear-static.sdof-spring",
+      "title": "Single-degree-of-freedom linear spring",
+      "analysis_type": "linear_static",
+      "description": "Checks u=P/k and equal-and-opposite support reaction for a scalar spring.",
+      "inputs": [
+        {
+          "path": "artifacts/sdof-static-input.json",
+          "media_type": "application/json",
+          "sha256": "d6d9fd8b04ad2741a930b10c48c483f94cf107b3d766b097be9115f5aa44a18b",
+          "byte_length": 237
+        }
+      ],
+      "expected_metrics": [
+        {
+          "metric_id": "displacement_m",
+          "description": "Loaded degree-of-freedom displacement",
+          "unit": "m",
+          "minimum": 0.009999999999,
+          "maximum": 0.010000000001
+        },
+        {
+          "metric_id": "reaction_n",
+          "description": "Support reaction",
+          "unit": "N",
+          "minimum": -1000.0000001,
+          "maximum": -999.9999999
+        }
+      ],
+      "reference_sources": [
+        "Closed-form equilibrium u=P/k; reaction=-P."
+      ],
+      "limitation_ids": [
+        "LIM-REF-SOLVER",
+        "LIM-COVERAGE"
+      ],
+      "reference_artifacts": [
+        {
+          "path": "artifacts/sdof-static-result.json",
+          "media_type": "application/json",
+          "sha256": "7975ec91aced6fa827f0026bb8a47d98b96104dac2eafc5101dfcc1e71ae77a9",
+          "byte_length": 360
+        }
+      ]
+    }
+  ],
+  "validations": [
+    {
+      "validation_id": "pass19-linux-reference-sdof",
+      "benchmark_id": "linear-static.sdof-spring",
+      "solver_id": "structural-solver-linear",
+      "solver_version": "0.19.0",
+      "platform": "declared reference result; generation environment did not execute Rust",
+      "executed_at_utc": null,
+      "status": "not_run",
+      "observed_metrics": {},
+      "result": null,
+      "notes": [
+        "Rust was not available in the generation environment. This matrix row is intentionally not_run.",
+        "The separate reference artifact records the closed-form expected result, not an executed solver claim."
+      ]
+    }
+  ],
+  "known_limitations": [
+    {
+      "limitation_id": "LIM-REF-SOLVER",
+      "title": "Reference solver only",
+      "description": "The current dense/reference solvers are architecture demonstrators and are not validated for production structural design.",
+      "affected_components": [
+        "solver-linear",
+        "solver-nonlinear",
+        "solver-dynamics"
+      ],
+      "severity": "critical",
+      "workaround": "Use independently validated engineering software and qualified review for real projects.",
+      "open": true
+    },
+    {
+      "limitation_id": "LIM-COVERAGE",
+      "title": "Very limited benchmark coverage",
+      "description": "Pass 19 seeds the portal with one analytical case; broad element, material, geometry, norm and platform matrices remain future work.",
+      "affected_components": [
+        "assurance-portal"
+      ],
+      "severity": "high",
+      "workaround": "Do not generalize this benchmark result to unsupported analysis classes.",
+      "open": true
+    }
+  ],
+  "traceability": [
+    {
+      "requirement_id": "ASSURANCE-ARTIFACT-INTEGRITY",
+      "source": "20-pass plan, Pass 19",
+      "claim": "Published inputs and results are SHA-256 addressed and verified while building the portal.",
+      "benchmark_ids": [
+        "linear-static.sdof-spring"
+      ],
+      "evidence_paths": [
+        "artifacts/sdof-static-input.json",
+        "artifacts/sdof-static-result.json"
+      ]
+    },
+    {
+      "requirement_id": "SOLVER-LINEAR-SDOF-EQUILIBRIUM",
+      "source": "Analytical relation u=P/k",
+      "claim": "The reference result lies inside the declared displacement and reaction ranges.",
+      "benchmark_ids": [
+        "linear-static.sdof-spring"
+      ],
+      "evidence_paths": [
+        "artifacts/sdof-static-result.json"
+      ]
+    }
+  ],
+  "independent_lab_results": [
+    {
+      "result_id": "illustrative-lab-submission",
+      "organization": "No external organization \u2014 placeholder only",
+      "report_reference": "PASS19-ILLUSTRATIVE-NOT-A-LAB-REPORT",
+      "issue_date": "2026-09-27",
+      "scope": "Demonstrates report linkage only.",
+      "accreditation_statement": null,
+      "verification_status": "illustrative_unverified",
+      "report": {
+        "path": "artifacts/illustrative-lab-report.md",
+        "media_type": "text/markdown",
+        "sha256": "4ae3c22e4e55dbd2dbc30c51a168439869cef929c0afb76e2c7651d791ef7761",
+        "byte_length": 415
+      },
+      "benchmark_ids": [
+        "linear-static.sdof-spring"
+      ],
+      "notes": [
+        "Must never be presented as independent validation."
+      ]
+    }
+  ]
+}

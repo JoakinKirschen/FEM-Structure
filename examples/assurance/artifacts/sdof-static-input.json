@@ -1,0 +1,7 @@
+{
+  "schema_version": "structural-assurance-benchmark-input/1.0",
+  "benchmark_id": "linear-static.sdof-spring",
+  "description": "Analytical one-degree-of-freedom spring: u = P/k",
+  "force_n": 1000.0,
+  "stiffness_n_per_m": 100000.0
+}

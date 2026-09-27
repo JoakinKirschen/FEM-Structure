@@ -1,0 +1,8 @@
+{
+  "schema_version": "structural-backup-drill/1.0",
+  "scope": "collaboration repository and artifact store",
+  "rpo_minutes": 60,
+  "rto_minutes": 240,
+  "restore_integrity": "all declared SHA-256 digests must match",
+  "last_drill_status": "procedure_defined_pilot_execution_required"
+}

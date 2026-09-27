@@ -1,0 +1,343 @@
+<Window x:Class="Structural.Desktop.Wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Structural Platform — Model &amp; Analysis" Width="1500" Height="920"
+        MinWidth="1050" MinHeight="680"
+        Background="#0E1116" Foreground="#EEF2F6"
+        PreviewKeyDown="Window_PreviewKeyDown" Closing="Window_Closing">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="190"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" Background="#171C23" BorderBrush="#303844" BorderThickness="0,0,0,1">
+            <DockPanel Margin="8,5">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                    <Button Click="New_Click" ToolTip="Create a new empty structural model">New</Button>
+                    <Button Click="Open_Click" ToolTip="Open structural JSON">Open model</Button>
+                    <Button Click="SaveModel_Click" ToolTip="Save model geometry (Ctrl+S)">Save model</Button>
+                    <Button Click="Save_Click" ToolTip="Export current resource assignments">Export assignments</Button>
+                    <Separator/>
+                    <Button x:Name="UndoButton" Click="Undo_Click">Undo</Button>
+                    <Button x:Name="RedoButton" Click="Redo_Click">Redo</Button>
+                    <Separator/>
+                    <Button Click="Palette_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Commands"/>
+                            <TextBlock Text="  Ctrl+K" Foreground="#91A0B2"/>
+                        </StackPanel>
+                    </Button>
+                    <Button Click="Validate_Click">Validate model</Button>
+                    <Button Click="RunAnalysis_Click" Background="#23736F" BorderBrush="#48B8B2"
+                            FontWeight="SemiBold">Run analysis</Button>
+                </StackPanel>
+                <TextBlock x:Name="InputHintText" DockPanel.Dock="Right" VerticalAlignment="Center"
+                           Foreground="#91A0B2"
+                           Text="Select: click   ·   Orbit: middle-drag / Alt+left   ·   Pan: right-drag / Shift+left   ·   Wheel: zoom"/>
+            </DockPanel>
+        </Border>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="270"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="310"/>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" Background="#171C23" BorderBrush="#303844" BorderThickness="0,0,1,0">
+                <DockPanel>
+                    <Border DockPanel.Dock="Top" Padding="12,10" BorderBrush="#303844" BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <TextBlock Text="MODEL EXPLORER" FontWeight="SemiBold" FontSize="13"/>
+                            <TextBlock Text="Select nodes or members to assign resources."
+                                       Foreground="#91A0B2" FontSize="11" Margin="0,4,0,0"/>
+                        </StackPanel>
+                    </Border>
+                    <TreeView x:Name="ModelTree" Margin="6" Background="Transparent" BorderThickness="0"
+                              Foreground="#E8EDF3" SelectedItemChanged="ModelTree_SelectedItemChanged"
+                              AllowDrop="True" Drop="ModelTree_Drop" DragOver="ModelTree_DragOver">
+                        <TreeView.ItemContainerStyle>
+                            <Style TargetType="TreeViewItem">
+                                <Setter Property="IsExpanded" Value="True"/>
+                                <Setter Property="Padding" Value="3"/>
+                                <Setter Property="Margin" Value="0,1"/>
+                            </Style>
+                        </TreeView.ItemContainerStyle>
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Ellipse Width="7" Height="7" Fill="#48B8B2" Margin="0,0,7,0"/>
+                                    <TextBlock Text="{Binding Name}" ToolTip="{Binding Kind}"/>
+                                </StackPanel>
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </DockPanel>
+            </Border>
+
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch"
+                          Background="#252C35" ResizeBehavior="PreviousAndNext"/>
+
+            <Grid Grid.Column="2" Background="#0B0E13" ClipToBounds="True">
+                <Viewport3D x:Name="Viewport" ClipToBounds="True"
+                            Focusable="True"
+                            MouseDown="Viewport_MouseDown"
+                            MouseMove="Viewport_MouseMove"
+                            MouseUp="Viewport_MouseButtonUp"
+                            MouseWheel="Viewport_MouseWheel"
+                            MouseLeave="Viewport_MouseLeave">
+                    <Viewport3D.Camera>
+                        <PerspectiveCamera x:Name="Camera" Position="7,6,5"
+                                           LookDirection="-7,-6,-5"
+                                           UpDirection="0,0,1" FieldOfView="42"/>
+                    </Viewport3D.Camera>
+                    <ModelVisual3D>
+                        <ModelVisual3D.Content>
+                            <Model3DGroup x:Name="Scene"/>
+                        </ModelVisual3D.Content>
+                    </ModelVisual3D>
+                </Viewport3D>
+
+                <Border HorizontalAlignment="Left" VerticalAlignment="Top" Margin="14"
+                        Background="#D91A2028" BorderBrush="#35404D" BorderThickness="1"
+                        CornerRadius="6" Padding="10,7">
+                    <StackPanel>
+                        <TextBlock x:Name="ViewportLabel" Text="3-D MODEL" FontWeight="SemiBold"/>
+                        <TextBlock Text="Click an object to select it" Foreground="#91A0B2" FontSize="11"/>
+                    </StackPanel>
+                </Border>
+
+                <Border HorizontalAlignment="Right" VerticalAlignment="Top" Margin="14"
+                        Background="#E61A2028" BorderBrush="#35404D" BorderThickness="1"
+                        CornerRadius="6" Padding="6">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <Button x:Name="SelectToolButton" Click="SelectTool_Click"
+                                    ToolTip="Select objects (S)">Select</Button>
+                            <Button x:Name="OrbitToolButton" Click="OrbitTool_Click"
+                                    ToolTip="Orbit camera (O)">Orbit</Button>
+                            <Button x:Name="PanToolButton" Click="PanTool_Click"
+                                    ToolTip="Pan camera (P)">Pan</Button>
+                        </StackPanel>
+                        <Separator Margin="5,2"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Click="HomeView_Click" ToolTip="Fit all (Home)">Fit</Button>
+                            <Button Click="FrameSelection_Click" ToolTip="Frame selected object (F)">Frame</Button>
+                            <Button Click="IsoView_Click" ToolTip="Isometric view (4)">Iso</Button>
+                            <Button Click="FrontView_Click" ToolTip="Front view (1)">Front</Button>
+                            <Button Click="TopView_Click" ToolTip="Top view (3)">Top</Button>
+                            <Button Click="SideView_Click" ToolTip="Side view (2)">Side</Button>
+                            <Button x:Name="GridButton" Click="Grid_Click" ToolTip="Show or hide grid">Grid</Button>
+                        </StackPanel>
+                    </StackPanel>
+                </Border>
+
+                <Border x:Name="ViewportHint" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                        Margin="18" Background="#CC171C23" CornerRadius="5" Padding="12,7">
+                    <TextBlock x:Name="ViewportHintText" Foreground="#B8C3CF"
+                               Text="Click to select · Middle-drag or Alt+left to orbit · Right-drag or Shift+left to pan · Wheel to zoom"/>
+                </Border>
+            </Grid>
+
+            <GridSplitter Grid.Column="3" Width="5" HorizontalAlignment="Stretch"
+                          Background="#252C35" ResizeBehavior="PreviousAndNext"/>
+
+            <Border Grid.Column="4" Background="#171C23" BorderBrush="#303844" BorderThickness="1,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="12">
+                        <TextBlock Text="PROPERTIES" FontWeight="SemiBold" FontSize="13"/>
+                        <Border Background="#11161C" BorderBrush="#303844" BorderThickness="1"
+                                CornerRadius="4" Padding="10" Margin="0,8,0,12">
+                            <StackPanel>
+                                <TextBlock x:Name="SelectedName" FontWeight="SemiBold" Text="Nothing selected"/>
+                                <TextBlock x:Name="SelectedKind" Foreground="#91A0B2" Margin="0,3,0,0"
+                                           Text="Select an item in the tree or viewport." TextWrapping="Wrap"/>
+                            </StackPanel>
+                        </Border>
+
+                        <TextBlock Text="MODEL AUTHORING" Style="{StaticResource SectionHeaderStyle}"/>
+                        <UniformGrid Columns="2">
+                            <Button Content="+ Node" Click="AddNode_Click" ToolTip="Add a node at the current model centre"/>
+                            <Button Content="Start member" Click="StartMember_Click" ToolTip="Select the first end node"/>
+                            <Button Content="Finish member" Click="FinishMember_Click" ToolTip="Select the second end node"/>
+                            <Button Content="Delete entity" Click="DeleteEntity_Click" ToolTip="Delete the selected node or member"/>
+                        </UniformGrid>
+                        <Border x:Name="NodeEditor" Visibility="Collapsed" Margin="0,7,0,4"
+                                Background="#11161C" BorderBrush="#303844" BorderThickness="1"
+                                CornerRadius="4" Padding="9">
+                            <StackPanel>
+                                <TextBlock Text="NODE COORDINATES (m)" FontWeight="SemiBold"/>
+                                <UniformGrid Columns="3" Margin="0,5,0,0">
+                                    <StackPanel Margin="2">
+                                        <TextBlock Text="X" Foreground="#B7C2CE"/>
+                                        <TextBox x:Name="NodeXText" Padding="5"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="2">
+                                        <TextBlock Text="Y" Foreground="#B7C2CE"/>
+                                        <TextBox x:Name="NodeYText" Padding="5"/>
+                                    </StackPanel>
+                                    <StackPanel Margin="2">
+                                        <TextBlock Text="Z" Foreground="#B7C2CE"/>
+                                        <TextBox x:Name="NodeZText" Padding="5"/>
+                                    </StackPanel>
+                                </UniformGrid>
+                                <Button Content="Apply coordinates" Click="ApplyNodeCoordinates_Click"/>
+                            </StackPanel>
+                        </Border>
+                        <TextBlock x:Name="AuthoringHintText" Foreground="#91A0B2" FontSize="11"
+                                   Margin="2,3,2,7" TextWrapping="Wrap"
+                                   Text="Add nodes, edit coordinates, then select two nodes to create a member."/>
+
+                        <TextBlock Text="LOADS" Style="{StaticResource SectionHeaderStyle}"/>
+                        <UniformGrid Columns="2">
+                            <Button Content="↓ Gravity" Tag="Load|gravity|Gravity load"
+                                    Click="Resource_Click"
+                                    PreviewMouseLeftButtonDown="Resource_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="Resource_PreviewMouseMove"/>
+                            <Button Content="↓ Point load" Tag="Load|point-load|Point load"
+                                    Click="Resource_Click"
+                                    PreviewMouseLeftButtonDown="Resource_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="Resource_PreviewMouseMove"/>
+                        </UniformGrid>
+
+                        <TextBlock Text="SUPPORTS" Style="{StaticResource SectionHeaderStyle}"/>
+                        <UniformGrid Columns="2">
+                            <Button Content="▰ Fixed" Tag="Support|fixed|Fixed support"
+                                    Click="Resource_Click"
+                                    PreviewMouseLeftButtonDown="Resource_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="Resource_PreviewMouseMove"/>
+                            <Button Content="△ Pinned" Tag="Support|pinned|Pinned support"
+                                    Click="Resource_Click"
+                                    PreviewMouseLeftButtonDown="Resource_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="Resource_PreviewMouseMove"/>
+                            <Button Content="○ Roller" Tag="Support|roller|Roller support"
+                                    Click="Resource_Click"
+                                    PreviewMouseLeftButtonDown="Resource_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="Resource_PreviewMouseMove"/>
+                        </UniformGrid>
+
+                        <TextBlock Text="MATERIALS" Style="{StaticResource SectionHeaderStyle}"/>
+                        <UniformGrid Columns="2">
+                            <Button Content="Steel" Tag="Material|steel|Structural steel"
+                                    Click="Resource_Click"
+                                    PreviewMouseLeftButtonDown="Resource_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="Resource_PreviewMouseMove"/>
+                            <Button Content="Concrete" Tag="Material|concrete|Concrete"
+                                    Click="Resource_Click"
+                                    PreviewMouseLeftButtonDown="Resource_PreviewMouseLeftButtonDown"
+                                    PreviewMouseMove="Resource_PreviewMouseMove"/>
+                        </UniformGrid>
+
+                        <TextBlock Margin="2,8,2,12" Foreground="#91A0B2" FontSize="11"
+                                   Text="Click a resource to assign it to the selected object, or drag it onto the model tree."
+                                   TextWrapping="Wrap"/>
+
+                        <DockPanel Margin="0,4,0,6">
+                            <TextBlock Text="ASSIGNMENTS" FontWeight="SemiBold"/>
+                            <Button DockPanel.Dock="Right" Content="Remove selected"
+                                    Click="RemoveAssignment_Click" Padding="7,3" FontSize="11"/>
+                        </DockPanel>
+                        <ListBox x:Name="AssignmentsList" Background="#11161C" Foreground="#E8EDF3"
+                                 BorderBrush="#303844" MinHeight="140" Padding="3"
+                                 SelectionChanged="AssignmentList_SelectionChanged"/>
+
+                        <Border x:Name="AssignmentEditor" Visibility="Collapsed" Margin="0,8,0,0"
+                                Background="#11161C" BorderBrush="#303844" BorderThickness="1"
+                                CornerRadius="4" Padding="9">
+                            <StackPanel>
+                                <TextBlock Text="EDIT ASSIGNMENT" FontWeight="SemiBold"/>
+                                <TextBlock x:Name="AssignmentTargetText" Foreground="#91A0B2"
+                                           Margin="0,3,0,6" TextWrapping="Wrap"/>
+                                <StackPanel x:Name="LoadEditorPanel">
+                                    <TextBlock Text="Magnitude (kN)" Foreground="#B7C2CE"/>
+                                    <TextBox x:Name="LoadMagnitudeText" Padding="5" Margin="0,2,0,5"/>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="8"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <StackPanel>
+                                            <TextBlock Text="Direction X" Foreground="#B7C2CE"/>
+                                            <TextBox x:Name="DirectionXText" Padding="5" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock Text="Direction Z" Foreground="#B7C2CE"/>
+                                            <TextBox x:Name="DirectionZText" Padding="5" Margin="0,2,0,0"/>
+                                        </StackPanel>
+                                    </Grid>
+                                    <Button Content="Apply changes" Click="ApplyAssignment_Click"
+                                            Margin="0,8,0,0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <TabControl x:Name="BottomTabs" Grid.Row="2" Background="#171C23" Foreground="#E8EDF3"
+                    BorderBrush="#303844">
+            <TabItem Header="RESULTS">
+                <DockPanel Margin="8">
+                    <TextBlock DockPanel.Dock="Top" Margin="0,0,0,5" Foreground="#91A0B2"
+                               Text="Linear X-Z pin-jointed truss preview. Red = tension, blue = compression, yellow = deformed nodes."/>
+                    <ListBox x:Name="AnalysisList" FontFamily="Consolas" FontSize="11"/>
+                </DockPanel>
+            </TabItem>
+            <TabItem Header="VALIDATION">
+                <Expander x:Name="ValidationExpander" Header="Model diagnostics" IsExpanded="True">
+                    <ListBox x:Name="ValidationList" Margin="8"/>
+                </Expander>
+            </TabItem>
+            <TabItem Header="BACKGROUND JOBS">
+                <Expander x:Name="ResultsExpander" Header="Analysis and jobs" IsExpanded="True">
+                    <DockPanel Margin="8">
+                        <Button DockPanel.Dock="Top" HorizontalAlignment="Left"
+                                Click="CancelJob_Click" Content="Cancel selected"/>
+                        <DataGrid x:Name="JobsGrid" Margin="0,5,0,0" AutoGenerateColumns="False"
+                                  IsReadOnly="True" Background="#11161C" Foreground="#E8EDF3"
+                                  BorderBrush="#303844" GridLinesVisibility="Horizontal">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Name" Binding="{Binding Name}" Width="*"/>
+                                <DataGridTextColumn Header="Status" Binding="{Binding Status}" Width="120"/>
+                                <DataGridTextColumn Header="Started" Binding="{Binding StartedAt}" Width="170"/>
+                                <DataGridTextColumn Header="Exit" Binding="{Binding ExitCode}" Width="60"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </DockPanel>
+                </Expander>
+            </TabItem>
+        </TabControl>
+
+        <StatusBar Grid.Row="3" Background="#202731" Foreground="#C4CED8">
+            <StatusBarItem>
+                <TextBlock x:Name="StatusText" Text="Ready"/>
+            </StatusBarItem>
+            <Separator/>
+            <StatusBarItem HorizontalAlignment="Right">
+                <TextBlock x:Name="CameraStatusText" Foreground="#91A0B2" Text="Select mode"/>
+            </StatusBarItem>
+        </StatusBar>
+
+        <Border x:Name="PaletteOverlay" Grid.RowSpan="4" Visibility="Collapsed" Background="#B0000000">
+            <Border Width="650" MaxHeight="480" VerticalAlignment="Top" Margin="0,90,0,0"
+                    Background="#202731" BorderBrush="#435060" BorderThickness="1"
+                    CornerRadius="8" Padding="12">
+                <StackPanel>
+                    <TextBox x:Name="PaletteQuery" FontSize="18" Padding="8"
+                             TextChanged="PaletteQuery_TextChanged"
+                             KeyDown="PaletteQuery_KeyDown"/>
+                    <ListBox x:Name="PaletteResults" Margin="0,8,0,0"
+                             DisplayMemberPath="Title" MouseDoubleClick="PaletteResults_MouseDoubleClick"/>
+                    <TextBlock Text="Enter to run · Escape to close" Foreground="#91A0B2" Margin="4"/>
+                </StackPanel>
+            </Border>
+        </Border>
+    </Grid>
+</Window>

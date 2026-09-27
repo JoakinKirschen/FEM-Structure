@@ -1,0 +1,10 @@
+{
+  "requested_modes": 2,
+  "symmetry_tolerance": 1e-12,
+  "positive_definite_tolerance": 1e-14,
+  "jacobi_tolerance": 1e-12,
+  "residual_tolerance": 1e-08,
+  "maximum_sweeps": 100,
+  "normalization": "mass",
+  "deterministic_profile": true
+}

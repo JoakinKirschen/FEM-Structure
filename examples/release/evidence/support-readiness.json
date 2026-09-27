@@ -1,0 +1,16 @@
+{
+  "schema_version": "structural-support/1.0",
+  "support_tiers": [
+    "pilot",
+    "standard",
+    "enterprise"
+  ],
+  "diagnostic_bundle_requires_consent": true,
+  "diagnostic_bundle_excludes_model_content_by_default": true,
+  "escalation": [
+    "support",
+    "engineering",
+    "solver owner",
+    "product security"
+  ]
+}

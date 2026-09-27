@@ -1,0 +1,5 @@
+{
+  "analysis": "modal",
+  "system": "examples/dynamics/modal-system.json",
+  "options": "examples/dynamics/eigen-options.json"
+}

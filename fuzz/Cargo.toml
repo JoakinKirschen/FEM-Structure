@@ -1,0 +1,20 @@
+[package]
+name = "structural-fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+serde_json = "1"
+structural-release = { path = "../crates/release" }
+
+[[bin]]
+name = "release_candidate_json"
+path = "fuzz_targets/release_candidate_json.rs"
+test = false
+doc = false
+bench = false

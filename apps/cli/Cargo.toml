@@ -1,0 +1,32 @@
+[package]
+name = "structural-cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+chrono.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+structural-audit = { path = "../../crates/audit" }
+structural-assurance = { path = "../../crates/assurance" }
+structural-collaboration = { path = "../../crates/collaboration" }
+structural-domain = { path = "../../crates/domain" }
+structural-execution = { path = "../../crates/execution" }
+structural-geometry-api = { path = "../../crates/geometry-api" }
+structural-geometry-simple = { path = "../../crates/geometry-simple" }
+structural-ifc-adapter = { path = "../../crates/ifc-adapter" }
+structural-step-adapter = { path = "../../crates/step-adapter" }
+structural-mesh-api = { path = "../../crates/mesh-api" }
+structural-mesh-simple = { path = "../../crates/mesh-simple" }
+structural-mesh-tet = { path = "../../crates/mesh-tet" }
+structural-rules-api = { path = "../../crates/rules-api" }
+structural-rules-engine = { path = "../../crates/rules-engine" }
+structural-release = { path = "../../crates/release" }
+structural-solver-api = { path = "../../crates/solver-api" }
+structural-solver-linear = { path = "../../crates/solver-linear" }
+structural-solver-nonlinear = { path = "../../crates/solver-nonlinear" }
+structural-solver-dynamics = { path = "../../crates/solver-dynamics" }
+structural-units = { path = "../../crates/units" }
+uuid.workspace = true

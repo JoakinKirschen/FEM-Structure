@@ -1,0 +1,15 @@
+{
+  "schema_version": "0.1",
+  "analysis_id": "00000000-0000-0000-0000-000000000201",
+  "dofs": [
+    {
+      "id": "00000000-0000-0000-0000-000000000202",
+      "node_id": "00000000-0000-0000-0000-000000000203",
+      "elastic_stiffness_n_per_m": 1000.0,
+      "yield_force_n": 10.0,
+      "post_yield_stiffness_ratio": 0.1,
+      "geometric_cubic_stiffness_n_per_m3": 0.0,
+      "reference_force_n": 20.0
+    }
+  ]
+}

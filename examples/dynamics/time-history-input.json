@@ -1,0 +1,98 @@
+{
+  "system": {
+    "schema_version": "0.1",
+    "analysis_id": "00000000-0000-0000-0000-000000000010",
+    "dof_ids": [
+      "00000000-0000-0000-0000-000000000011"
+    ],
+    "mass_matrix_kg": [
+      [
+        1.0
+      ]
+    ],
+    "stiffness_matrix_n_per_m": [
+      [
+        100.0
+      ]
+    ]
+  },
+  "damping": {
+    "kind": "rayleigh",
+    "mass_coefficient_per_s": 0.2,
+    "stiffness_coefficient_s": 0.0
+  },
+  "loads": [
+    {
+      "time_s": 0.0,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.01,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.02,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.03,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.04,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.05,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.06,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.07,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.08,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.09,
+      "force_n": [
+        1.0
+      ]
+    },
+    {
+      "time_s": 0.1,
+      "force_n": [
+        1.0
+      ]
+    }
+  ],
+  "initial_displacement_m": [
+    0.0
+  ],
+  "initial_velocity_m_per_s": [
+    0.0
+  ]
+}

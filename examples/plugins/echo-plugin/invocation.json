@@ -1,0 +1,12 @@
+{
+  "schema_version": "structural-plugin/1.0",
+  "protocol_version": "1.0",
+  "invocation_id": "00000000-0000-0000-0000-000000000014",
+  "method": "echo",
+  "params": {
+    "message": "hello from Pass 14"
+  },
+  "granted_capabilities": [
+    "inspect_system"
+  ]
+}

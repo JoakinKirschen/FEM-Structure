@@ -1,0 +1,9 @@
+{
+  "run_id": "cloud",
+  "created_at_utc": "2026-01-01T00:00:02Z",
+  "displacements_m": [
+    0.0010000002,
+    0.001999999
+  ],
+  "maximum_stress_pa": 250000100.0
+}

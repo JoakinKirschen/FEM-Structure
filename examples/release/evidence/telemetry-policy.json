@@ -1,0 +1,14 @@
+{
+  "schema_version": "structural-telemetry/1.0",
+  "default": "disabled",
+  "consent": "explicit",
+  "model_content": false,
+  "precise_geometry": false,
+  "retention_days": 30,
+  "allowed_categories": [
+    "crash",
+    "performance",
+    "feature_usage"
+  ],
+  "deletion_supported": true
+}

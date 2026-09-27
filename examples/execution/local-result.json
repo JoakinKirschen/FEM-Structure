@@ -1,0 +1,9 @@
+{
+  "run_id": "local",
+  "created_at_utc": "2026-01-01T00:00:00Z",
+  "displacements_m": [
+    0.001,
+    0.002
+  ],
+  "maximum_stress_pa": 250000000.0
+}

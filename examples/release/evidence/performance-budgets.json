@@ -1,0 +1,18 @@
+{
+  "schema_version": "structural-performance/1.0",
+  "profile": "reference-ci",
+  "budgets": [
+    {
+      "operation": "assurance catalog verification",
+      "maximum_wall_ms": 2500,
+      "maximum_rss_mib": 256
+    },
+    {
+      "operation": "collaboration sync 1000 objects",
+      "maximum_wall_ms": 5000,
+      "maximum_rss_mib": 512
+    }
+  ],
+  "regression_threshold_percent": 10,
+  "status": "baseline_defined_not_hardware_certified"
+}

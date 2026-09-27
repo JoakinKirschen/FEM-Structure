@@ -1,0 +1,14 @@
+{
+  "schema_version": "structural-automation/1.0",
+  "request_id": "6e00ab45-e07a-4df0-a0cb-6a0a80fe6849",
+  "python_executable": "python3",
+  "script_source": "text = str(context.get(\"text\", \"\"))\noperation_index = api.call(\"artifact.sha256\", {\"text\": text})\nemit({\"queued_operation\": operation_index, \"characters\": len(text)})\n",
+  "context": {"text": "Pass 13"},
+  "capabilities": ["read_artifacts"],
+  "limits": {
+    "timeout_ms": 5000,
+    "maximum_script_bytes": 65536,
+    "maximum_output_bytes": 1048576,
+    "maximum_operations": 32
+  }
+}

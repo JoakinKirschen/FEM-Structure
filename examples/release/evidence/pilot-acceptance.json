@@ -1,0 +1,16 @@
+{
+  "schema_version": "structural-pilot/1.0",
+  "minimum_firms": 3,
+  "required_roles": [
+    "structural engineer",
+    "BIM coordinator",
+    "IT/security administrator"
+  ],
+  "exit_criteria": [
+    "no open critical safety defect",
+    "restore drill passed",
+    "support escalation exercised",
+    "known limitations accepted"
+  ],
+  "status": "planned_not_claimed_complete"
+}

@@ -1,0 +1,13 @@
+{
+  "schema_version": "structural-assurance-benchmark-result/1.0",
+  "benchmark_id": "linear-static.sdof-spring",
+  "solver_id": "structural-solver-linear",
+  "solver_version": "0.19.0",
+  "observed_metrics": {
+    "displacement_m": 0.01,
+    "reaction_n": -1000.0
+  },
+  "notes": [
+    "Reference-scale benchmark; not evidence of general FEM validity."
+  ]
+}

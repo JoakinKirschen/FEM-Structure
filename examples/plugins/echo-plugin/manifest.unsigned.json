@@ -1,0 +1,26 @@
+{
+  "schema_version": "structural-plugin/1.0",
+  "plugin_id": "org.structural.example.echo",
+  "name": "Structural Echo Example",
+  "version": "1.0.0",
+  "publisher": "Structural Platform examples",
+  "protocol_version": "1.0",
+  "automation_api": {
+    "minimum": "1.0",
+    "maximum_exclusive": "2.0"
+  },
+  "entrypoint": {
+    "executable": "structural-echo-plugin",
+    "arguments": []
+  },
+  "requested_capabilities": [
+    "inspect_system"
+  ],
+  "minimum_sandbox": "process",
+  "limits": {
+    "timeout_ms": 5000,
+    "maximum_stdout_bytes": 1048576,
+    "maximum_stderr_bytes": 262144
+  },
+  "signature": null
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "structural-threat-model/1.0",
+  "method": "STRIDE",
+  "reviewed_boundaries": [
+    "desktop-to-plugin",
+    "desktop-to-cloud",
+    "identity",
+    "artifact-store"
+  ],
+  "high_risks": [
+    {
+      "id": "TM-01",
+      "threat": "malicious plugin requests excess capability",
+      "mitigation": "signed manifest, least privilege, OS sandbox",
+      "residual": "medium"
+    },
+    {
+      "id": "TM-02",
+      "threat": "tampered solver artifact",
+      "mitigation": "content addressing and signed release provenance",
+      "residual": "low"
+    },
+    {
+      "id": "TM-03",
+      "threat": "cross-tenant evidence disclosure",
+      "mitigation": "federated identity, project ACLs and envelope encryption",
+      "residual": "medium"
+    }
+  ],
+  "open_high_or_critical": 0
+}

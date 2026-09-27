@@ -1,0 +1,18 @@
+[package]
+name = "structural-plugin-host-app"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "structural-plugin"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+base64.workspace = true
+ed25519-dalek.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+structural-plugin-host = { path = "../../crates/plugin-host" }
+structural-plugin-sdk = { path = "../../crates/plugin-sdk" }

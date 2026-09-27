@@ -1,0 +1,15 @@
+{
+  "schema_version": "structural-migration-matrix/1.0",
+  "supported_sources": [
+    "0.17",
+    "0.18",
+    "0.19"
+  ],
+  "target": "0.20",
+  "requirements": [
+    "idempotent migration",
+    "original retained",
+    "hash-linked migration record",
+    "rollback rehearsal"
+  ]
+}

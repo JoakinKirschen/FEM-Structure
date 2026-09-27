@@ -1,0 +1,21 @@
+Structural Platform desktop
+
+Start Structural.Desktop.Wpf.exe. This package is self-contained for Windows x64.
+
+Built-in workflow:
+1. Orbit with left-drag, pan with right-drag, and zoom with the mouse wheel.
+2. Select nodes or members in the viewport or model explorer.
+3. Assign supports, loads, and materials from the right panel.
+4. Select a load assignment to edit magnitude and X/Z direction.
+5. Choose Run analysis to display displacements, reactions, axial forces, and the
+   automatically scaled deformed shape.
+
+demo-model.json is provided as an import example. After opening it, assign:
+- pinned support to node-a;
+- roller support to node-b;
+- downward point load to node-c.
+
+Engineering limitation:
+The integrated desktop analysis is a linear, axial-only, pin-jointed truss solver that
+projects geometry into the global X-Z plane. It is not validated for production
+structural design and does not represent a general beam/frame/shell/solid FEM solver.

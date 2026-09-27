@@ -1,0 +1,17 @@
+{
+  "schema_version": "structural-incident-response/1.0",
+  "severity_levels": [
+    "SEV1",
+    "SEV2",
+    "SEV3",
+    "SEV4"
+  ],
+  "sev1_ack_minutes": 30,
+  "security_contact_role": "Product Security Incident Commander",
+  "requirements": [
+    "preserve evidence",
+    "revoke compromised keys",
+    "notify affected customers",
+    "publish post-incident review"
+  ]
+}

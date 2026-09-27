@@ -1,0 +1,10 @@
+{
+  "schema_version": "structural-marketplace/1.0",
+  "publisher_identity_required": true,
+  "package_signing_required": true,
+  "sandbox_required": true,
+  "malware_scan_required": true,
+  "independent_review_required": true,
+  "revocation_supported": true,
+  "emergency_kill_switch_supported": true
+}

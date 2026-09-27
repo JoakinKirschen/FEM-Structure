@@ -1,0 +1,5 @@
+{
+  "schema_version": "structural-release-trust/1.0",
+  "ed25519_public_keys": {},
+  "revoked_key_ids": []
+}

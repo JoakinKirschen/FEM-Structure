@@ -1,0 +1,15 @@
+[package]
+name = "structural-example-echo-plugin"
+version.workspace = true
+edition.workspace = true
+license = "MIT OR Apache-2.0"
+publish = false
+
+[[bin]]
+name = "structural-echo-plugin"
+path = "src/main.rs"
+
+[dependencies]
+anyhow.workspace = true
+serde_json.workspace = true
+structural-plugin-sdk = { path = "../../../crates/plugin-sdk" }
