@@ -1,0 +1,52 @@
+[workspace]
+resolver = "2"
+members = [
+  "crates/units",
+  "crates/domain",
+  "crates/geometry-api",
+  "crates/geometry-simple",
+  "crates/ifc-adapter",
+  "crates/step-adapter",
+  "crates/mesh-api",
+  "crates/mesh-simple",
+  "crates/mesh-tet",
+  "crates/rules-api",
+  "crates/rules-engine",
+  "crates/solver-api",
+  "crates/solver-linear",
+  "crates/solver-nonlinear",
+  "crates/solver-dynamics",
+  "crates/audit",
+  "crates/automation-api",
+  "crates/automation-host",
+  "crates/plugin-sdk",
+  "crates/plugin-host",
+  "crates/execution",
+  "crates/collaboration",
+  "crates/identity",
+  "crates/key-management",
+  "crates/assurance",
+  "crates/release",
+  "apps/cli",
+  "apps/automation-host",
+  "apps/plugin-host",
+  "examples/plugins/echo-plugin"
+]
+
+[workspace.package]
+version = "0.20.0"
+edition = "2021"
+license = "Proprietary"
+
+[workspace.dependencies]
+anyhow = "1"
+chrono = { version = "0.4", features = ["serde"] }
+hex = "0.4"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+uuid = { version = "1", features = ["v4", "v5", "serde"] }
+base64 = "0.22"
+ed25519-dalek = "2"
+chacha20poly1305 = "0.10"
+getrandom = "0.2"
