@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://structural.example/schemas/collaboration-repository-1.0.json",
+  "title": "Structural collaboration repository",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "repository_id",
+    "revisions",
+    "branches",
+    "comments",
+    "access"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "structural-collaboration/1.0"
+    },
+    "repository_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "revisions": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/revision"
+      }
+    },
+    "branches": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": [
+          "name",
+          "head"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "head": {
+            "$ref": "#/$defs/sha256"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "comments": {
+      "type": "object"
+    },
+    "access": {
+      "type": "object",
+      "required": [
+        "principal_roles"
+      ],
+      "properties": {
+        "principal_roles": {
+          "type": "object",
+          "additionalProperties": {
+            "enum": [
+              "viewer",
+              "commenter",
+              "editor",
+              "maintainer",
+              "owner"
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "domainObject": {
+      "type": "object",
+      "required": [
+        "object_id",
+        "kind",
+        "payload"
+      ],
+      "properties": {
+        "object_id": {
+          "type": "string",
+          "format": "uuid"
+        },
+        "kind": {
+          "type": "string",
+          "minLength": 1
+        },
+        "payload": {
+          "type": "object"
+        }
+      },
+      "additionalProperties": false
+    },
+    "snapshot": {
+      "type": "object",
+      "required": [
+        "objects"
+      ],
+      "properties": {
+        "objects": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "#/$defs/domainObject"
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "revision": {
+      "type": "object",
+      "required": [
+        "schema_version",
+        "revision_id",
+        "parents",
+        "author",
+        "created_at_utc",
+        "message",
+        "snapshot",
+        "snapshot_sha256"
+      ],
+      "properties": {
+        "schema_version": {
+          "const": "structural-collaboration/1.0"
+        },
+        "revision_id": {
+          "$ref": "#/$defs/sha256"
+        },
+        "parents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/sha256"
+          },
+          "maxItems": 2
+        },
+        "author": {
+          "type": "string",
+          "minLength": 1
+        },
+        "created_at_utc": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "snapshot": {
+          "$ref": "#/$defs/snapshot"
+        },
+        "snapshot_sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

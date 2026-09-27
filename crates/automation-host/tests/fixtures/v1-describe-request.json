@@ -1,0 +1,7 @@
+{
+  "schema_version": "structural-automation/1.0",
+  "request_id": "00000000-0000-0000-0000-000000000000",
+  "method": "system.describe",
+  "params": {},
+  "capabilities": ["inspect_system"]
+}

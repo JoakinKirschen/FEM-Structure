@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://structural.example/schemas/collaboration-sync-1.0.json",
+  "title": "Structural offline synchronization bundle",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "repository_id",
+    "revisions",
+    "branch_heads",
+    "comments",
+    "bundle_sha256"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "structural-collaboration-sync/1.0"
+    },
+    "repository_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "revisions": {
+      "type": "object"
+    },
+    "branch_heads": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "comments": {
+      "type": "object"
+    },
+    "bundle_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

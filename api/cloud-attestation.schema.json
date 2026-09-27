@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/structural/cloud-attestation-1.0.json",
+  "title": "Structural cloud execution attestation",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "attestation_id",
+    "job_id",
+    "envelope_sha256",
+    "started_at_utc",
+    "completed_at_utc",
+    "executor_id",
+    "execution_region",
+    "toolchain",
+    "inputs",
+    "outputs",
+    "attempt_count",
+    "signature"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "structural-cloud-attestation/1.0"
+    },
+    "attestation_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "job_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "envelope_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "started_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completed_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "executor_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "execution_region": {
+      "type": "string",
+      "minLength": 1
+    },
+    "toolchain": {
+      "$ref": "execution-envelope.schema.json#/$defs/toolchain"
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "$ref": "execution-envelope.schema.json#/$defs/artifact"
+      }
+    },
+    "outputs": {
+      "type": "array",
+      "items": {
+        "$ref": "execution-envelope.schema.json#/$defs/artifact"
+      }
+    },
+    "attempt_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "signature": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "type": "object",
+          "required": [
+            "algorithm",
+            "key_id",
+            "signed_sha256",
+            "signature_base64"
+          ],
+          "properties": {
+            "algorithm": {
+              "const": "ed25519-sha256"
+            },
+            "key_id": {
+              "type": "string",
+              "minLength": 1
+            },
+            "signed_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "signature_base64": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "0.2",
+  "evaluation_id": "b80b7c51-9e02-5e6b-920f-d89a4e5e2e48",
+  "model_revision_id": "9be91f30-8c59-5b92-86da-e0e44711b8e3",
+  "context": {
+    "jurisdiction": {
+      "type": "text",
+      "value": "BE"
+    },
+    "design_situation": {
+      "type": "text",
+      "value": "serviceability"
+    }
+  },
+  "numeric_inputs": {
+    "member_span": {
+      "value": 5.0,
+      "unit": "m",
+      "references": [
+        {
+          "artifact_sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "json_pointer": "/members/0/span_m",
+          "entity_id": "30fa4434-f786-5326-9524-f7875ce67ca0",
+          "description": "Member span used as model-validity prerequisite"
+        }
+      ]
+    },
+    "maximum_displacement": {
+      "value": 0.012,
+      "unit": "m",
+      "references": [
+        {
+          "artifact_sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "json_pointer": "/nodes/0/displacement_m",
+          "entity_id": "e4498889-b384-5278-b97f-80397c9f3290",
+          "description": "Envelope maximum nodal displacement"
+        }
+      ]
+    }
+  }
+}

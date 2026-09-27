@@ -1,0 +1,11 @@
+[package]
+name = "structural-geometry-api"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+structural-units = { path = "../units" }
+uuid.workspace = true

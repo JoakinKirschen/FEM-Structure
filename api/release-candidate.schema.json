@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.structural.example/release-candidate.schema.json",
+  "title": "Structural Platform release candidate",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "release_id",
+    "version",
+    "channel",
+    "created_at_utc",
+    "source_commit",
+    "artifacts",
+    "controls",
+    "telemetry",
+    "marketplace",
+    "signatures"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "structural-release/1.0"
+    },
+    "release_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "channel": {
+      "enum": [
+        "pilot",
+        "beta",
+        "stable"
+      ]
+    },
+    "created_at_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "source_commit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "path",
+          "kind",
+          "media_type",
+          "sha256",
+          "bytes"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "binary",
+              "installer",
+              "container",
+              "sbom",
+              "provenance",
+              "evidence",
+              "documentation"
+            ]
+          },
+          "media_type": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-fA-F]{64}$"
+          },
+          "bytes": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "controls": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "telemetry": {
+      "type": "object"
+    },
+    "marketplace": {
+      "type": "object"
+    },
+    "signatures": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": false
+}

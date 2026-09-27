@@ -1,0 +1,16 @@
+[package]
+name = "structural-plugin-sdk"
+version.workspace = true
+edition.workspace = true
+license = "MIT OR Apache-2.0"
+description = "Permissively licensed contracts for Structural Platform plugins"
+
+[dependencies]
+anyhow.workspace = true
+base64.workspace = true
+ed25519-dalek.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+structural-automation-api = { path = "../automation-api" }
+uuid.workspace = true

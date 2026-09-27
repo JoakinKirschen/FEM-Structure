@@ -1,0 +1,13 @@
+[package]
+name = "structural-solver-nonlinear"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+structural-solver-api = { path = "../solver-api" }
+
+[dev-dependencies]
+serde_json.workspace = true
+uuid.workspace = true

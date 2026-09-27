@@ -1,0 +1,12 @@
+[package]
+name = "structural-step-adapter"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+sha2.workspace = true
+structural-geometry-api = { path = "../geometry-api" }
+structural-units = { path = "../units" }
+uuid.workspace = true

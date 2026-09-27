@@ -1,0 +1,12 @@
+[package]
+name = "structural-solver-dynamics"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+structural-solver-api = { path = "../solver-api" }
+
+[dev-dependencies]
+uuid.workspace = true

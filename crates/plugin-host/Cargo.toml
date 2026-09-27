@@ -1,0 +1,16 @@
+[package]
+name = "structural-plugin-host"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+chrono.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+structural-audit = { path = "../audit" }
+structural-automation-api = { path = "../automation-api" }
+structural-plugin-sdk = { path = "../plugin-sdk" }
+uuid.workspace = true

@@ -1,0 +1,69 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.example.invalid/structural/nonlinear-analysis-0.1.json",
+  "title": "Structural nonlinear spring analysis input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "analysis_id",
+    "dofs"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "analysis_id": {
+      "type": "string",
+      "format": "uuid"
+    },
+    "dofs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "node_id",
+          "elastic_stiffness_n_per_m",
+          "yield_force_n",
+          "post_yield_stiffness_ratio",
+          "geometric_cubic_stiffness_n_per_m3",
+          "reference_force_n"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "node_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "elastic_stiffness_n_per_m": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "yield_force_n": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "post_yield_stiffness_ratio": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMaximum": 1
+          },
+          "geometric_cubic_stiffness_n_per_m3": {
+            "type": "number"
+          },
+          "reference_force_n": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+[package]
+name = "structural-solver-linear"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+structural-domain = { path = "../domain" }
+structural-solver-api = { path = "../solver-api" }
+structural-units = { path = "../units" }
+
+[dev-dependencies]
+uuid.workspace = true

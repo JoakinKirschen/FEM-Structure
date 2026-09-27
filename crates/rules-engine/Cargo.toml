@@ -1,0 +1,15 @@
+[package]
+name = "structural-rules-engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+structural-audit = { path = "../audit" }
+structural-rules-api = { path = "../rules-api" }
+
+[dev-dependencies]
+serde_json.workspace = true
+uuid.workspace = true

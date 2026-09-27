@@ -1,0 +1,31 @@
+{
+  "schema_version": "structural-automation-catalog/1.0",
+  "api_version": "1.1",
+  "operations": [
+    {
+      "method": "system.describe",
+      "capability": "inspect_system"
+    },
+    {
+      "method": "artifact.sha256",
+      "capability": "read_artifacts"
+    },
+    {
+      "method": "model.validate",
+      "capability": "validate_models"
+    },
+    {
+      "method": "rules.evaluate",
+      "capability": "evaluate_rules"
+    },
+    {
+      "method": "analysis.solve_nonlinear",
+      "capability": "run_analysis"
+    },
+    {
+      "operation": "release.verify",
+      "version": "1.0",
+      "description": "Verify a release candidate and its evidence"
+    }
+  ]
+}

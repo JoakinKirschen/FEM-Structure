@@ -1,0 +1,227 @@
+{
+  "schema_version": "0.2",
+  "metadata": {
+    "package_id": "demo.be.serviceability",
+    "package_version": "2.0.0",
+    "authority": "DEMONSTRATION ONLY",
+    "standard_identifier": "SYNTHETIC-RULES",
+    "standard_edition": "2026",
+    "national_annex": "BE-DEMO",
+    "jurisdiction": "BE",
+    "language": "en",
+    "status": "reviewed",
+    "supersedes": "demo.be.serviceability@1.0.0"
+  },
+  "applicability": {
+    "all": [
+      {
+        "context_key": "jurisdiction",
+        "operator": "equals",
+        "expected": [
+          {
+            "type": "text",
+            "value": "BE"
+          }
+        ],
+        "reason": "This demonstration package is selected only for Belgian projects.",
+        "clause_refs": [
+          {
+            "document": "SYNTHETIC-RULES",
+            "clause": "Scope.1",
+            "title": "Jurisdiction",
+            "uri": null
+          }
+        ]
+      }
+    ]
+  },
+  "parameters": {
+    "maximum_displacement": {
+      "key": "maximum_displacement",
+      "value": 0.02,
+      "unit": "m",
+      "description": "Synthetic displacement limit for engine testing; not a design value.",
+      "source": {
+        "document": "BE-DEMO",
+        "clause": "NA.1",
+        "title": "Demonstration parameter",
+        "uri": null
+      },
+      "interpretation_note_ids": [
+        "INT-001"
+      ]
+    }
+  },
+  "interpretation_notes": [
+    {
+      "id": "INT-001",
+      "title": "Demonstration-only value",
+      "text": "This value tests traceability and must not be used for engineering design.",
+      "status": "approved",
+      "clause_refs": [
+        {
+          "document": "SYNTHETIC-RULES",
+          "clause": "Notes.1",
+          "title": "Testing restriction",
+          "uri": null
+        }
+      ],
+      "supersedes": null
+    }
+  ],
+  "clause_graph": {
+    "nodes": {
+      "scope": {
+        "id": "scope",
+        "kind": "scope",
+        "title": "Scope and jurisdiction",
+        "references": [
+          {
+            "document": "SYNTHETIC-RULES",
+            "clause": "Scope.1",
+            "title": "Jurisdiction",
+            "uri": null
+          }
+        ],
+        "dependencies": [],
+        "interpretation_note_ids": []
+      },
+      "basis": {
+        "id": "basis",
+        "kind": "normative",
+        "title": "Valid model basis",
+        "references": [
+          {
+            "document": "SYNTHETIC-RULES",
+            "clause": "Basis.1",
+            "title": "Model basis",
+            "uri": null
+          }
+        ],
+        "dependencies": [
+          "scope"
+        ],
+        "interpretation_note_ids": []
+      },
+      "na-limit": {
+        "id": "na-limit",
+        "kind": "national_annex",
+        "title": "National displacement parameter",
+        "references": [
+          {
+            "document": "BE-DEMO",
+            "clause": "NA.1",
+            "title": "Demonstration parameter",
+            "uri": null
+          }
+        ],
+        "dependencies": [
+          "basis"
+        ],
+        "interpretation_note_ids": [
+          "INT-001"
+        ]
+      },
+      "sls-check": {
+        "id": "sls-check",
+        "kind": "normative",
+        "title": "Serviceability displacement check",
+        "references": [
+          {
+            "document": "SYNTHETIC-RULES",
+            "clause": "SLS.2",
+            "title": "Displacement limit",
+            "uri": null
+          }
+        ],
+        "dependencies": [
+          "na-limit"
+        ],
+        "interpretation_note_ids": []
+      }
+    },
+    "links": [
+      {
+        "from": "na-limit",
+        "to": "sls-check",
+        "relation": "refines",
+        "rationale": "The annex parameter refines the generic check."
+      },
+      {
+        "from": "sls-check",
+        "to": "basis",
+        "relation": "cross_references",
+        "rationale": "The check relies on a valid model basis."
+      }
+    ]
+  },
+  "rules": [
+    {
+      "id": "MODEL-SPAN-001",
+      "title": "Synthetic positive-span prerequisite",
+      "applicability": {
+        "all": []
+      },
+      "actual_input_key": "member_span",
+      "operator": "greater_than",
+      "limit": {
+        "source": "literal",
+        "value": 0.0,
+        "unit": "m"
+      },
+      "use_absolute_actual": false,
+      "clause_refs": [],
+      "interpretation_note_ids": [],
+      "clause_node_ids": [
+        "basis"
+      ],
+      "depends_on": []
+    },
+    {
+      "id": "SLS-DISP-001",
+      "title": "Synthetic absolute displacement check",
+      "applicability": {
+        "all": [
+          {
+            "context_key": "design_situation",
+            "operator": "equals",
+            "expected": [
+              {
+                "type": "text",
+                "value": "serviceability"
+              }
+            ],
+            "reason": "The rule is a serviceability demonstration.",
+            "clause_refs": [
+              {
+                "document": "SYNTHETIC-RULES",
+                "clause": "SLS.1",
+                "title": "Serviceability",
+                "uri": null
+              }
+            ]
+          }
+        ]
+      },
+      "actual_input_key": "maximum_displacement",
+      "operator": "less_than_or_equal",
+      "limit": {
+        "source": "parameter",
+        "key": "maximum_displacement"
+      },
+      "use_absolute_actual": true,
+      "clause_refs": [],
+      "interpretation_note_ids": [],
+      "clause_node_ids": [
+        "sls-check"
+      ],
+      "depends_on": [
+        {
+          "rule_id": "MODEL-SPAN-001",
+          "requirement": "pass",
+          "reason": "The displacement check requires a valid positive-span model."
+        }
+      ]
+    }
+  ]
+}

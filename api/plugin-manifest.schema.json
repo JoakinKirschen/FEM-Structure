@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://structural.example/schemas/plugin-manifest-1.0.json",
+  "title": "Structural Plugin Manifest",
+  "type": "object",
+  "required": [
+    "schema_version", "plugin_id", "name", "version", "publisher",
+    "protocol_version", "automation_api", "entrypoint",
+    "requested_capabilities", "minimum_sandbox", "limits", "signature"
+  ],
+  "properties": {
+    "schema_version": { "const": "structural-plugin/1.0" },
+    "plugin_id": { "type": "string", "minLength": 1 },
+    "name": { "type": "string", "minLength": 1 },
+    "version": { "type": "string", "minLength": 1 },
+    "publisher": { "type": "string", "minLength": 1 },
+    "protocol_version": { "const": "1.0" },
+    "automation_api": {
+      "type": "object",
+      "required": ["minimum", "maximum_exclusive"],
+      "properties": {
+        "minimum": { "type": "string" },
+        "maximum_exclusive": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "entrypoint": {
+      "type": "object",
+      "required": ["executable", "arguments"],
+      "properties": {
+        "executable": { "type": "string", "minLength": 1 },
+        "arguments": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "requested_capabilities": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["inspect_system", "read_artifacts", "validate_models", "evaluate_rules"]
+      }
+    },
+    "minimum_sandbox": { "enum": ["process", "os"] },
+    "limits": {
+      "type": "object",
+      "required": ["timeout_ms", "maximum_stdout_bytes", "maximum_stderr_bytes"],
+      "properties": {
+        "timeout_ms": { "type": "integer", "minimum": 1, "maximum": 300000 },
+        "maximum_stdout_bytes": { "type": "integer", "minimum": 1, "maximum": 16777216 },
+        "maximum_stderr_bytes": { "type": "integer", "minimum": 1, "maximum": 4194304 }
+      },
+      "additionalProperties": false
+    },
+    "signature": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["algorithm", "key_id", "signed_sha256", "signature_base64"],
+          "properties": {
+            "algorithm": { "const": "ed25519-sha256" },
+            "key_id": { "type": "string", "minLength": 1 },
+            "signed_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+            "signature_base64": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": false
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}
