@@ -1,0 +1,178 @@
+name: Build and package
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - master
+    tags:
+      - "v*"
+  pull_request:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  rust:
+    name: Rust (${{ matrix.name }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Linux x64
+            os: ubuntu-latest
+            artifact_name: structural-platform-linux-x64
+            executable_extension: ""
+          - name: Windows x64
+            os: windows-latest
+            artifact_name: structural-platform-windows-x64
+            executable_extension: ".exe"
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install stable Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build files
+        uses: Swatinem/rust-cache@v2
+        with:
+          shared-key: ${{ runner.os }}-release
+          cache-on-failure: true
+
+      # Cargo.lock is not currently committed, so do not use --locked here.
+      # Cargo creates the lock file automatically during this step.
+      - name: Compile Rust workspace
+        run: cargo build --workspace --release
+
+      - name: Run Rust tests
+        run: cargo test --workspace --release
+
+      - name: Stage Rust executables (Linux)
+        if: runner.os == 'Linux'
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/rust
+          cp target/release/structural-cli artifacts/rust/
+          cp target/release/structural-automation artifacts/rust/
+          cp target/release/structural-plugin artifacts/rust/
+          chmod +x artifacts/rust/*
+
+      - name: Stage Rust executables (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          New-Item -ItemType Directory -Force -Path artifacts/rust | Out-Null
+          Copy-Item target/release/structural-cli.exe artifacts/rust/
+          Copy-Item target/release/structural-automation.exe artifacts/rust/
+          Copy-Item target/release/structural-plugin.exe artifacts/rust/
+
+      - name: Upload Rust executables
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: artifacts/rust/
+          if-no-files-found: error
+          retention-days: 14
+
+  python:
+    name: Python bindings
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate Python bindings
+        run: python3 bindings/python/generate.py
+
+      - name: Test Python bindings
+        run: python3 -m unittest discover -s bindings/python/tests -v
+
+      - name: Package Python bindings
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p artifacts/python
+          cp -R bindings/python/structural_api artifacts/python/
+
+      - name: Upload Python bindings
+        uses: actions/upload-artifact@v4
+        with:
+          name: structural-python-bindings
+          path: artifacts/python/
+          if-no-files-found: error
+          retention-days: 14
+
+  desktop:
+    name: Windows desktop application
+    runs-on: windows-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "8.0.x"
+
+      - name: Restore desktop solution
+        run: dotnet restore apps/desktop/Structural.Desktop.sln
+
+      - name: Build desktop solution
+        run: >
+          dotnet build
+          apps/desktop/Structural.Desktop.sln
+          --configuration Release
+          --no-restore
+
+      - name: Run desktop core tests
+        run: >
+          dotnet run
+          --project apps/desktop/tests/Structural.Desktop.Core.Tests/Structural.Desktop.Core.Tests.csproj
+          --configuration Release
+          --no-restore
+
+      - name: Publish Windows desktop application
+        run: >
+          dotnet publish
+          apps/desktop/src/Structural.Desktop.Wpf/Structural.Desktop.Wpf.csproj
+          --configuration Release
+          --runtime win-x64
+          --self-contained true
+          -p:PublishSingleFile=true
+          -p:IncludeNativeLibrariesForSelfExtract=true
+          --output artifacts/desktop-win-x64
+
+      - name: Add desktop sample and usage notes
+        shell: pwsh
+        run: |
+          Copy-Item apps/desktop/samples/demo-model.json artifacts/desktop-win-x64/
+          Copy-Item apps/desktop/DISTRIBUTION.txt artifacts/desktop-win-x64/
+
+      - name: Upload Windows desktop application
+        uses: actions/upload-artifact@v4
+        with:
+          name: structural-desktop-windows-x64
+          path: artifacts/desktop-win-x64/
+          if-no-files-found: error
+          retention-days: 14
